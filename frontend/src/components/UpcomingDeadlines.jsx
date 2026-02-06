@@ -26,8 +26,8 @@ export default function UpcomingDeadlines() {
 
   const urgent = deadlines.filter(d => {
     const diff = Math.ceil((new Date(d.due_date) - new Date()) / (1000 * 60 * 60 * 24));
-    // return diff >= 0 && diff <= 7;
-    return diff <= 7;
+    return diff >= 0 && diff <= 7;
+    // return diff <= 7;
   });
 
   if (urgent.length === 0) return null;
