@@ -52,8 +52,21 @@ how did we parse the data?
 ### Why React for Frontend?
 **Key Points**:
 - Component-based architecture = reusable code (AddProjectForm.jsx and AddDeliverableForm.jsx - Both follow the same modal pattern with form handling, error states, and loading states.)
-- I'd extract common patterns into reusable utilities (form validation, modal logic, styling hooks) to reduce duplication."
+- extract common patterns into reusable utilities (form validation, modal logic, styling hooks) to reduce duplication."
+
+### Why Node.js + Express for Backend?
+"Node.js with Express because it's lightweight and uses JavaScript on both frontend and backend, which keeps the codebase consistent."
+
+## 🛡️ Security & Best Practices (HOW>????)
+
+- CORS enabled for development (localhost only)
+- Input validation on forms
+- SQL injection protection (parameterized queries)
+- Environment-based configuration
+- Error handling middleware
+
+
 
 ## Things I Would Add
 ------
-Removing Completed Projects
+Editing Projects

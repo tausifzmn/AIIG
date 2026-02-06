@@ -73,4 +73,25 @@ router.post('/', async (req, res) => {
   }
 });
 
+// DELETE /api/deliverables/:id - Delete a deliverable (extra :D)
+router.delete('/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+   
+    // Verify deliverable exists
+    const deliverable = await getQuery('SELECT id FROM deliverables WHERE id = ?', [id]);
+    if (!deliverable) {
+      return res.status(404).json({ error: 'Deliverable not found' });
+    }
+   
+    // Delete the deliverable
+    await runQuery('DELETE FROM deliverables WHERE id = ?', [id]);
+   
+    res.json({ message: 'Deliverable deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting deliverable:', error);
+    res.status(500).json({ error: 'Failed to delete deliverable' });
+  }
+});
+
 export default router;

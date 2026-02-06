@@ -11,6 +11,7 @@ function App() {
   const [showAddProject, setShowAddProject] = useState(false);
   const [showAddDeliverable, setShowAddDeliverable] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isAdminMode, setIsAdminMode] = useState(false);
 
   const handleProjectAdded = () => {
     setRefreshKey(prev => prev + 1);
@@ -22,11 +23,11 @@ function App() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#1a1a1a', color: '#fff', fontFamily: "'Segoe UI', system-ui, sans-serif" }}>
-      <Header onAddProject={() => setShowAddProject(true)} onAddDeliverable={() => setShowAddDeliverable(true)} />
+      <Header onAddProject={() => setShowAddProject(true)} onAddDeliverable={() => setShowAddDeliverable(true)} isAdminMode={isAdminMode} onToggleAdmin={() => setIsAdminMode(!isAdminMode)} />
       <main style={{ maxWidth: '1100px', margin: '0 auto', padding: '48px 32px' }}>
         <UpcomingDeadlines key={`upcoming-${refreshKey}`} />
-        <SearchBar onProjectSelect={setSelectedProject} key={`search-${refreshKey}`} />
-        <DeliverablesTable project={selectedProject} key={`table-${selectedProject?.id}-${refreshKey}`} />
+        <SearchBar onProjectSelect={setSelectedProject} key={`search-${refreshKey}`} isAdminMode={isAdminMode}/>
+        <DeliverablesTable project={selectedProject} isAdminMode={isAdminMode} key={`table-${selectedProject?.id}-${refreshKey}`} />
       </main>
       <footer style={{ marginTop: '80px', padding: '24px', textAlign: 'center' }}>
         <p style={{ color: '#555', fontSize: '12px', letterSpacing: '1px' }}>© 2026 AIIG</p>

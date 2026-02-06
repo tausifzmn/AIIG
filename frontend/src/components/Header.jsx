@@ -1,4 +1,4 @@
-export default function Header({ onAddProject, onAddDeliverable }) {
+export default function Header({ onAddProject, onAddDeliverable, isAdminMode, onToggleAdmin }) {
   return (
     <header style={{ backgroundColor: '#000', borderBottom: '1px solid #222', padding: '24px 0' }}>
       <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -7,7 +7,13 @@ export default function Header({ onAddProject, onAddDeliverable }) {
           <span style={{ fontSize: '16px', fontWeight: '500', color: '#fff', letterSpacing: '0.5px' }}>AIIG</span>
         </div>
         
-        <div style={{ display: 'flex', gap: '12px' }}>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <button
+            onClick={onToggleAdmin}
+            style={{ padding: '6px 12px', backgroundColor: isAdminMode ? '#d4af37' : '#222', border: '1px solid #444', borderRadius: '4px', color: isAdminMode ? '#000' : '#666', cursor: 'pointer', fontSize: '11px', letterSpacing: '0.5px', fontWeight: '500' }}
+          >
+            {isAdminMode ? '🔒 Admin ON' : '🔓 Admin OFF'}
+          </button>
           <button
             onClick={onAddProject}
             style={{ padding: '8px 16px', backgroundColor: 'transparent', border: '1px solid #d4af37', borderRadius: '4px', color: '#d4af37', cursor: 'pointer', fontSize: '12px', letterSpacing: '0.5px' }}

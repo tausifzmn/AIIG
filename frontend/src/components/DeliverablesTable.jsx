@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-export default function DeliverablesTable({ project }) {
+export default function DeliverablesTable({ project, isAdminMode }) {
   const [deliverables, setDeliverables] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -36,6 +36,15 @@ export default function DeliverablesTable({ project }) {
 
   const formatDate = (d) => new Date(d).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
+  const handleDelete = (id) => {
+    if (window.confirm('Are you sure? This cannot be undone.')) {
+      fetch(`http://localhost:5000/api/deliverables/${id}`, { method: 'DELETE' })
+        .then(res => res.json())
+        .then(() => setDeliverables(deliverables.filter(d => d.id !== id)))
+        .catch(err => console.error('Delete failed:', err));
+    }
+  };
+
   if (!project) {
     return (
       <div style={{ textAlign: 'center', padding: '80px 0' }}>
@@ -57,7 +66,7 @@ export default function DeliverablesTable({ project }) {
       <table style={{ width: '100%', borderCollapse: 'collapse' }}>
         <thead>
           <tr style={{ borderBottom: '1px solid #2a2a2a' }}>
-            {['DELIVERABLE', 'DUE DATE', 'FREQUENCY', 'PROJECT MANAGER'].map(h => (
+            {['DELIVERABLE', 'DUE DATE', 'FREQUENCY', 'PROJECT MANAGER', ''].map(h => (
               <th key={h} style={{ padding: '16px 0', textAlign: 'left', fontSize: '11px', color: '#555', letterSpacing: '1px', fontWeight: '400' }}>{h}</th>
             ))}
           </tr>
@@ -69,6 +78,9 @@ export default function DeliverablesTable({ project }) {
               <td style={{ padding: '18px 0', color: getDateColor(d.due_date), fontSize: '14px' }}>{formatDate(d.due_date)}</td>
               <td style={{ padding: '18px 0', color: '#666', fontSize: '14px' }}>{d.frequency || '—'}</td>
               <td style={{ padding: '18px 0', color: '#888', fontSize: '14px' }}>{d.project_manager}</td>
+              <td style={{ padding: '18px 0', textAlign: 'right'}}  >
+                {isAdminMode && <button onClick={() => handleDelete(d.id)} style={{ background: 'none', border: 'none', color: '#e74c3c', cursor: 'pointer', fontSize: '12px', fontWeight: '500', padding: '4px 8px' }}>Delete</button>}
+              </td>
             </tr>
           ))}
         </tbody>
